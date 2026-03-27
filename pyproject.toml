@@ -1,0 +1,16 @@
+[project]
+name = "influxdb-1x-mcp"
+version = "0.1.0"
+description = "MCP server for InfluxDB 1.x (InfluxQL) — read-only query access"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "influxdb>=5.3.2",
+]
+
+[project.scripts]
+influxdb-1x-mcp = "influxdb_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
