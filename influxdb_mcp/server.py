@@ -178,8 +178,19 @@ async def call_tool(name: str, arguments: dict[str, Any]) -> list[types.TextCont
 
 def main():
     import asyncio
+    from mcp.server.stdio import stdio_server
+
     print(f"InfluxDB 1.x MCP server starting — {HOST}:{PORT}/{DATABASE}", file=sys.stderr)
-    asyncio.run(mcp.server.stdio.run_server(server))
+
+    async def _run():
+        async with stdio_server() as (read_stream, write_stream):
+            await server.run(
+                read_stream,
+                write_stream,
+                server.create_initialization_options(),
+            )
+
+    asyncio.run(_run())
 
 
 if __name__ == "__main__":
